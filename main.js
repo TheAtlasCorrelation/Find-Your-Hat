@@ -71,64 +71,61 @@ class Field {
     console.log("Enter (l)eft, (r)ight, (u)p or (d)own to move");
     this.field.forEach((elem) => console.log(elem.join("")));
   }
+}
+let difficulty = prompt("Enter easy, medium or hard: ");
+let field = [];
+let height = 0;
+let width = 0;
+let holePercentage = 0;
 
-  static generateField(height, width, percentage) {
-    let field = [];
-    for (let fieldTileY = 0; fieldTileY < height; fieldTileY++) {
-      field[fieldTileY] = [];
-      for (let fieldTileX = 0; fieldTileX < width; fieldTileX++) {
-        field[fieldTileY][fieldTileX] = fieldCharacter;
-      }
+switch (difficulty) {
+  case "easy":
+    height = 7;
+    width = 20;
+    holePercentage = 0.2;
+    break;
+  case "medium":
+    height = 17;
+    width = 62;
+    holePercentage = 0.3;
+    break;
+  case "hard":
+    height = 27;
+    width = 54;
+    holePercentage = 0.3;
+    break;
+  default:
+    height = 10;
+    width = 45;
+    holePercentage = 0.3;
+    break;
+}
+
+for (let i = 0; i < height; i++) {
+  field.push([]);
+  for (let j = 0; j < width; j++) {
+    if (Math.random() < holePercentage) {
+      field[i].push(hole);
+    } else {
+      field[i].push(fieldCharacter);
     }
-
-    field[Math.floor(Math.random() * field.length)][
-      Math.floor(Math.random() * field[0].length)
-    ] = hat;
-    field[0][0] = pathCharacter;
-
-    for (let y = 0; y < field.length; y++) {
-      for (let x = 0; x < field[y].length; x++) {
-        if (field[y][x] === hat) {
-          var hatX = x;
-          var hatY = y;
-          break;
-        }
-      }
-    }
-
-    let totalNumHoles = Math.floor(height * width * (percentage / 100));
-
-    while (totalNumHoles > 0) {
-      let randIndex = Math.floor(Math.random() * field.length);
-      let randIndex2 = Math.floor(Math.random() * field[0].length);
-
-      if (
-        (randIndex === 0 && randIndex2 === 0) ||
-        (randIndex === 1 && randIndex2 === 1) ||
-        (randIndex === 0 && randIndex2 === 1) ||
-        (randIndex === 1 && randIndex2 === 0) ||
-        field[randIndex][randIndex2] === hat ||
-        field[randIndex][randIndex2] === field[hatY][hatX]
-      ) {
-        continue;
-      }
-      field[randIndex][randIndex2] = hole;
-      totalNumHoles--;
-    }
-    return field;
   }
 }
 
-let fieldHeight = 0;
-let fieldWidth = 0;
-let holePercentage = 0;
+let hatX = Math.floor(Math.random() * width);
+let hatY = Math.floor(Math.random() * height);
 
-fieldHeight = Number(prompt("Enter Field height(5 - 30):"));
-fieldWidth = Number(prompt("Enter Field width(2 - 145): "));
+while (hatX === 0 && hatY === 0) {
+  hatX = Math.floor(Math.random() * width);
+  hatY = Math.floor(Math.random() * height);
+}
 
-holePercentage = Number(prompt("Enter your percentage here: "));
-const myField = new Field(
-  Field.generateField(fieldHeight, fieldWidth, holePercentage)
-);
+field[hatY][hatX] = hat;
+
+
+field[hatY][hatX] = hat;
+
+const myField = new Field(field);
+
 
 myField.game();
