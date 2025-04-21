@@ -122,9 +122,6 @@ while (hatX === 0 && hatY === 0) {
 
 field[hatY][hatX] = hat;
 
-
-field[hatY][hatX] = hat;
-
 const myField = new Field(field);
 
 
