@@ -68,7 +68,6 @@ class Field {
   }
 
   print() {
-    clear();
     console.log("Enter (l)eft, (r)ight, (u)p or (d)own to move");
     this.field.forEach((elem) => console.log(elem.join("")));
   }
@@ -124,7 +123,7 @@ let fieldHeight = 0;
 let fieldWidth = 0;
 let holePercentage = 0;
 
-fieldHeight = Number(prompt("Enter Field height( - 30):"));
+fieldHeight = Number(prompt("Enter Field height(5 - 30):"));
 fieldWidth = Number(prompt("Enter Field width(2 - 145): "));
 
 holePercentage = Number(prompt("Enter your percentage here: "));
